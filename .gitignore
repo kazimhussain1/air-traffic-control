@@ -1,0 +1,3 @@
+#exclude all file of the folder except dummy.txt
+AirTrafficContol\MINGW-BUILD\*
+!AirTrafficContol\MINGW-BUILD\dummy.txt
