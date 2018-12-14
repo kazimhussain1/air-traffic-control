@@ -25,10 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        splashscreen.cpp
+        splashscreen.cpp \
+    mainwindow.cpp \
+    CustomWidgets/draggablelabel.cpp
 
 HEADERS += \
-        splashscreen.h
+        splashscreen.h \
+    mainwindow.h \
+    Graph/Graph.h \
+    CustomWidgets/draggablelabel.h
 
 FORMS += \
-        splashscreen.ui
+        splashscreen.ui \
+    mainwindow.ui
