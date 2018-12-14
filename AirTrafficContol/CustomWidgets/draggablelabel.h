@@ -3,13 +3,16 @@
 
 #include <QMouseEvent>
 #include <QApplication>
+#include <QMainWindow>
+
+#include <QPropertyAnimation>
 
 #include <QLabel>
 
 class DraggableLabel : public QLabel
 {
 public:
-    DraggableLabel(QWidget* parent = nullptr): QLabel(parent){}
+    explicit DraggableLabel(QMainWindow* parent = nullptr): QLabel(parent){myParent = parent;}
 
 protected:
     void mousePressEvent(QMouseEvent *event)
@@ -22,13 +25,27 @@ protected:
         if(event->buttons() & Qt::LeftButton)
         {
             this->move(mapToParent(event->pos() - offset));
+            this->myParent->update();
         }
+
+    }
+    void mouseReleaseEvent(QMouseEvent *event)
+    {
+        this->myParent->update();
+        QLabel::mouseReleaseEvent(event);
+    }
+    void mouseDoubleClickEvent()
+    {
+
     }
 
 
 
 
+
+
 private:
+    QMainWindow *myParent;
     QPoint offset;
     QPoint startingPosition;
 

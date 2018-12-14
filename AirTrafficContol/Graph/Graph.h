@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 
-#include <QLabel>
+#include <CustomWidgets/draggablelabel.h>
 
 
 using namespace std;
@@ -16,7 +16,7 @@ struct VertexNODE
 	char previous = 0;
 	VertexNODE* nextVertex = NULL;
 
-    QLabel *visualNode;
+    DraggableLabel *visualNode;
 };
 struct EdgeNODE
 {
@@ -43,7 +43,7 @@ public:
 	}
 
 
-	void InsertVertex(char name)
+    void InsertVertex(char name, DraggableLabel* visualNode)
 	{
 		VertexNODE *temp = new VertexNODE();
 		temp->name = name;
@@ -51,6 +51,7 @@ public:
 		temp->header = NULL;
 		temp->count = 0;
 		temp->nextVertex = NULL;
+        temp->visualNode = visualNode;
 		if (this->root == NULL)
 		{
 			root = temp;
@@ -363,7 +364,7 @@ public:
 		VertexNODE* currentVertex = this->root;
 		while (currentVertex)
 		{
-			newGraph->InsertVertex(currentVertex->name);
+            newGraph->InsertVertex(currentVertex->name, currentVertex->visualNode);
 
 			currentVertex = currentVertex->nextVertex;
 		}
@@ -413,7 +414,7 @@ public:
 		VertexNODE* currentVertex = this->root;
 		while (currentVertex)
 		{
-			newGraph->InsertVertex(currentVertex->name);
+            newGraph->InsertVertex(currentVertex->name, currentVertex->visualNode);
 			
 
 			currentVertex = currentVertex->nextVertex;
@@ -733,6 +734,8 @@ public:
 			current = current->nextVertex;
 		}
 	}
+
+
 
 	
 

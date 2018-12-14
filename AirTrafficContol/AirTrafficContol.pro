@@ -27,13 +27,16 @@ SOURCES += \
         main.cpp \
         splashscreen.cpp \
     mainwindow.cpp \
-    CustomWidgets/draggablelabel.cpp
+    CustomWidgets/draggablelabel.cpp \
+    CustomWidgets/togglebutton.cpp
 
 HEADERS += \
         splashscreen.h \
     mainwindow.h \
     Graph/Graph.h \
-    CustomWidgets/draggablelabel.h
+    CustomWidgets/draggablelabel.h \
+    CustomWidgets/togglebutton.h \
+    CustomWidgets/style.h
 
 FORMS += \
         splashscreen.ui \

@@ -8,16 +8,17 @@
 
 #include <vector>
 
-#include <QGraphicsScene>
-#include <QGraphicsView>
+
 #include <QPixmap>
 #include <QPainter>
-#include <QDrag>
-#include <QMimeData>
+#include <QPropertyAnimation>
+
+
 
 
 #include <Graph/Graph.h>
 #include <CustomWidgets/draggablelabel.h>
+#include <CustomWidgets/togglebutton.h>
 
 namespace Ui {
 class MainWindow;
@@ -33,30 +34,55 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event)
+    {
+        QPainter painter(this);
+        painter.setPen(QPen(Qt::green, 2, Qt::SolidLine, Qt::RoundCap));
+
+        VertexNODE* currentVertex = Map->getRoot();
+        while(currentVertex)
         {
-            QPainter painter(this);
-            painter.setPen(QPen(Qt::green, 2, Qt::SolidLine, Qt::RoundCap));
-            std::vector<DraggableLabel*>::iterator i;
-            for(i = LabelList.begin();i<LabelList.end();i++)
+            QPoint myPos1 = currentVertex->visualNode->pos();
+            myPos1.setX(myPos1.x() + 15);
+            myPos1.setY(myPos1.y() + 15);
+
+            EdgeNODE* currentEdge = (EdgeNODE*)currentVertex->header;
+            while(currentEdge)
             {
-                QPoint myPos = (*i)->pos();
-                myPos.setX(myPos.x() + 10);
-                myPos.setY(myPos.y() + 10);
-                painter.drawLine(myPos.x(),myPos.y(), 500, 500);
+                QPoint myPos2 = currentEdge->address->visualNode->pos();
+                myPos2.setX(myPos2.x() + 15);
+                myPos2.setY(myPos2.y() + 15);
+
+                painter.drawLine(myPos1, myPos2);
+
+                currentEdge = currentEdge->nextEdge;
             }
+            currentVertex = currentVertex->nextVertex;
         }
+    }
+
+
+public slots:
+    void showEditMenu();
+    void showDepartMenu();
 
 
 private slots:
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 
+
+
+
+
+
+    void on_SourceCombo_activated(int index);
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;
-    QGraphicsView *view;
-    QPixmap *myPixmap;
     QPainter *myPainter;
+    Switch *mySwitch;
 
     std::vector<DraggableLabel*> LabelList;
     int pos=0;
