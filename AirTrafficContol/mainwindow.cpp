@@ -82,7 +82,7 @@ void MainWindow::updateGraphWeights()
         }
         currentVertex = currentVertex->nextVertex;
     }
-    this->update();
+    //this->update();
 }
 
 
@@ -104,10 +104,8 @@ void MainWindow::on_pushButton_clicked()
                             );
         temp->setGeometry(50 + pos,50,30,30);
         pos+= 40;
+
         temp->show();
-
-        connect(temp, SIGNAL(mouseReleased()), this, SLOT(updateGraphWeights()));
-
 
         char myChar = (ui->VertexNameBox->text().toStdString())[0];
         Map->InsertVertex(myChar, temp);
@@ -127,20 +125,29 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    char Source = ui->SourceNameBox->text().toStdString()[0];
-    char Destination = ui->DestinationNameBox->text().toStdString()[0];
+    if(ui->SourceNameBox->text() != "" && ui->DestinationNameBox->text() != "")
+    {
+        char Source = ui->SourceNameBox->text().toStdString()[0];
+        char Destination = ui->DestinationNameBox->text().toStdString()[0];
 
-    QPoint SourceCenter = Map->searchVertex(Source)->visualNode->geometry().center();
-    QPoint DestinationCenter = Map->searchVertex(Destination)->visualNode->geometry().center();
+        QPoint SourceCenter = Map->searchVertex(Source)->visualNode->geometry().center();
+        QPoint DestinationCenter = Map->searchVertex(Destination)->visualNode->geometry().center();
 
-    double distance = sqrt( pow(SourceCenter.x() - DestinationCenter.x(), 2) + pow(SourceCenter.y() - DestinationCenter.y(), 2) );
+        double distance = sqrt( pow(SourceCenter.x() - DestinationCenter.x(), 2) + pow(SourceCenter.y() - DestinationCenter.y(), 2) );
 
-    Map->InsertEdge(Source, Destination, distance);
+        Map->InsertEdge(Source, Destination, distance);
 
-    EdgeNODE* temp = (EdgeNODE*)Map->getRoot()->header;
+        //EdgeNODE* temp = (EdgeNODE*)Map->getRoot()->header;
 
-    updateGraphWeights();
-    this->update();
+        ui->SourceNameBox->setText("");
+        ui->DestinationNameBox->setText("");
+        this->update();
+    }
+    else
+    {
+        updateGraphWeights();
+        this->update();
+    }
 }
 
 
