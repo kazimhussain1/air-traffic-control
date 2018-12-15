@@ -7,6 +7,7 @@
 #include <QStyle>
 
 #include <vector>
+#include <math.h>
 
 
 #include <QPixmap>
@@ -54,6 +55,8 @@ protected:
 
                 painter.drawLine(myPos1, myPos2);
 
+                painter.drawText(QPoint((myPos1 + myPos2)/2), QString::number(currentEdge->weight));
+
                 currentEdge = currentEdge->nextEdge;
             }
             currentVertex = currentVertex->nextVertex;
@@ -64,6 +67,7 @@ protected:
 public slots:
     void showEditMenu();
     void showDepartMenu();
+    void updateGraphWeights();
 
 
 private slots:

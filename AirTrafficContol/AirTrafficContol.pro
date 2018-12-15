@@ -28,7 +28,8 @@ SOURCES += \
         splashscreen.cpp \
     mainwindow.cpp \
     CustomWidgets/draggablelabel.cpp \
-    CustomWidgets/togglebutton.cpp
+    CustomWidgets/togglebutton.cpp \
+    Graph/graph.cpp
 
 HEADERS += \
         splashscreen.h \

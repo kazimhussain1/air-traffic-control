@@ -64,6 +64,27 @@ void MainWindow::showDepartMenu()
     ui->groupBox->hide();
 }
 
+void MainWindow::updateGraphWeights()
+{
+    VertexNODE* currentVertex = Map->getRoot();
+    while (currentVertex)
+    {
+        EdgeNODE* currentEdge = (EdgeNODE*)currentVertex->header;
+        QPoint SourceCenter = currentVertex->visualNode->geometry().center();
+        while (currentEdge)
+        {
+            QPoint DestinationCenter = currentEdge->address->visualNode->geometry().center();
+
+            double Weight = sqrt( pow(SourceCenter.x() - DestinationCenter.x(), 2) + pow(SourceCenter.y() - DestinationCenter.y(), 2) );
+            currentEdge->weight = Weight;
+
+            currentEdge = currentEdge->nextEdge;
+        }
+        currentVertex = currentVertex->nextVertex;
+    }
+    this->update();
+}
+
 
 
 void MainWindow::on_pushButton_clicked()
@@ -84,6 +105,8 @@ void MainWindow::on_pushButton_clicked()
         temp->setGeometry(50 + pos,50,30,30);
         pos+= 40;
         temp->show();
+
+        connect(temp, SIGNAL(mouseReleased()), this, SLOT(updateGraphWeights()));
 
 
         char myChar = (ui->VertexNameBox->text().toStdString())[0];
@@ -107,8 +130,16 @@ void MainWindow::on_pushButton_2_clicked()
     char Source = ui->SourceNameBox->text().toStdString()[0];
     char Destination = ui->DestinationNameBox->text().toStdString()[0];
 
-    Map->InsertEdge(Source, Destination);
+    QPoint SourceCenter = Map->searchVertex(Source)->visualNode->geometry().center();
+    QPoint DestinationCenter = Map->searchVertex(Destination)->visualNode->geometry().center();
 
+    double distance = sqrt( pow(SourceCenter.x() - DestinationCenter.x(), 2) + pow(SourceCenter.y() - DestinationCenter.y(), 2) );
+
+    Map->InsertEdge(Source, Destination, distance);
+
+    EdgeNODE* temp = (EdgeNODE*)Map->getRoot()->header;
+
+    updateGraphWeights();
     this->update();
 }
 

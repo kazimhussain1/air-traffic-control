@@ -12,7 +12,11 @@
 class DraggableLabel : public QLabel
 {
 public:
-    explicit DraggableLabel(QMainWindow* parent = nullptr): QLabel(parent){myParent = parent;}
+    explicit DraggableLabel(QMainWindow* parent = nullptr): QLabel(parent)
+    {
+        myParent = parent;
+        connect(this, SIGNAL(mouseReleased()), myParent, SLOT(updateGraphWeights()));
+    }
 
 protected:
     void mousePressEvent(QMouseEvent *event)
@@ -32,6 +36,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event)
     {
         this->myParent->update();
+        emit mouseReleased();
         QLabel::mouseReleaseEvent(event);
     }
     void mouseDoubleClickEvent()
@@ -39,9 +44,8 @@ protected:
 
     }
 
-
-
-
+signals:
+    void mouseReleased(){}
 
 
 private:
