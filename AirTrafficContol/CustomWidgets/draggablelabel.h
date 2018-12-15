@@ -18,6 +18,7 @@ public:
         myParent = parent;
         connect(this, SIGNAL(mouseReleased()), myParent, SLOT(updateGraphWeights()));
     }
+    virtual ~DraggableLabel();
 
 protected:
     void mousePressEvent(QMouseEvent *event);

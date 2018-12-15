@@ -3,6 +3,11 @@
 
 
 
+DraggableLabel::~DraggableLabel()
+{
+
+}
+
 void DraggableLabel::mousePressEvent(QMouseEvent *event)
 {
     offset = event->pos();
