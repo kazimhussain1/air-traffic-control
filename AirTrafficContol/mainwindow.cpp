@@ -87,7 +87,11 @@ void MainWindow::updateGraphWeights()
     //this->update();
 }
 
-
+bool MainWindow::animatePlane(string path)
+{
+    int i = path.length();
+    QTimer *AnimationTimer = new QTimer;
+}
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -104,8 +108,14 @@ void MainWindow::on_pushButton_clicked()
                             "qproperty-wordWrap: true;"
 
                             );
-        temp->setGeometry(50 + pos,50,30,30);
-        pos+= 40;
+        temp->setGeometry(50 + posX,50 + posY,30,30);
+        posX+= 50;
+
+        if(posX >950)
+        {
+            posX = 0;
+            posY+=50;
+        }
 
         temp->show();
 
@@ -113,7 +123,7 @@ void MainWindow::on_pushButton_clicked()
         Map->InsertVertex(myChar, temp);
 
         ui->SourceCombo->addItem(ui->VertexNameBox->text());
-
+        ui->DestinationCombo->addItem(ui->VertexNameBox->text());
 
 
         ui->VertexNameBox->setText("");
@@ -155,30 +165,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 
 
-void MainWindow::on_SourceCombo_activated(int index)
-{
-    index++;//JUST TO STOP NOT USED WARNING
 
-
-    ui->DestinationCombo->clear();
-    VertexNODE* currentVertex = Map->getRoot();
-    while(currentVertex)
-    {
-        if(currentVertex->name == ui->SourceCombo->currentText().toStdString()[0])
-        {
-            break;
-        }
-        currentVertex = currentVertex->nextVertex;
-    }
-    EdgeNODE *currentEdge = (EdgeNODE*)currentVertex->header;
-    while(currentEdge)
-    {
-        QString name;
-        name += currentEdge->address->name;
-        ui->DestinationCombo->addItem(name);
-        currentEdge = currentEdge->nextEdge;
-    }
-}
 
 void MainWindow::on_pushButton_3_clicked()
 {
@@ -189,10 +176,10 @@ void MainWindow::on_pushButton_3_clicked()
     VertexNODE* DestinationVertex =  Map->searchVertex(DestinationName);
 
     QRect SourceGeometry = SourceVertex->visualNode->geometry();
-    SourceGeometry.adjust(5,5,-5,-5);
+    SourceGeometry.adjust(10,10,-10,-10);
 
     QRect DetinationGeometry = DestinationVertex->visualNode->geometry();
-    DetinationGeometry.adjust(5,5,-5,-5);
+    DetinationGeometry.adjust(10,10,-10,-10);
 
     QLabel *temp = new QLabel(this);
 
@@ -200,18 +187,24 @@ void MainWindow::on_pushButton_3_clicked()
 
     temp->setStyleSheet(
                 "color:green;"
-                "background-color:green;"
+                "background-color:light-green;"
                 "font: bold 10px arial;"
                 "border: solid 1px green;"
-                "border-radius: 10px;"
+                "border-radius: 5px;"
                 "qproperty-alignment: 'AlignHCenter | AlignVCenter';"
                 "qproperty-wordWrap: true;"
                 );
+
+    std::string path = Map->DjikstraShortestPath(SourceName,DestinationName);
+
+    animatePlane(path);
 
     QPropertyAnimation *animation = new QPropertyAnimation(temp, "geometry");
     animation->setDuration(20000);
     animation->setStartValue(SourceGeometry);
     animation->setEndValue(DetinationGeometry);
+
+
 
     animation->start();
 

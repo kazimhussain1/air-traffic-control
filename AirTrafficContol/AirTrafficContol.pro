@@ -36,7 +36,8 @@ SOURCES += \
     mainwindow.cpp \
     CustomWidgets/draggablelabel.cpp \
     CustomWidgets/togglebutton.cpp \
-    Graph/graph.cpp
+    Graph/graph.cpp \
+    CustomWidgets/limitedtimer.cpp
 
 HEADERS += \
         splashscreen.h \
@@ -44,7 +45,9 @@ HEADERS += \
     Graph/Graph.h \
     CustomWidgets/draggablelabel.h \
     CustomWidgets/togglebutton.h \
-    CustomWidgets/style.h
+    CustomWidgets/style.h \
+    LinkedList/LinkedList.h \
+    CustomWidgets/limitedtimer.h
 
 FORMS += \
         splashscreen.ui \

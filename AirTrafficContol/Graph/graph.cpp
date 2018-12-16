@@ -501,7 +501,7 @@ string Graph::DjikstraShortestPath(char Source, char Destination)
 
         while (currentVertex)
         {
-            if ((currentVertex->visited) == true)
+            if (currentVertex->visited = true)
             {
                 EdgeNODE* currentEdge = (EdgeNODE*)currentVertex->header;
                 while (currentEdge)

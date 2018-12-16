@@ -5,21 +5,26 @@
 #include <QDesktopWidget>
 #include <QLabel>
 #include <QStyle>
+#include <QTableWidget>
+#include <QTimer>
 
 #include <vector>
 #include <math.h>
-
 
 #include <QPixmap>
 #include <QPainter>
 #include <QPropertyAnimation>
 
-
-
-
 #include <Graph/Graph.h>
 #include <CustomWidgets/draggablelabel.h>
 #include <CustomWidgets/togglebutton.h>
+
+#include "xlsxdocument.h"
+#include "xlsxchartsheet.h"
+#include "xlsxcellrange.h"
+#include "xlsxchart.h"
+#include "xlsxrichstring.h"
+#include "xlsxworkbook.h"
 
 namespace Ui {
 class MainWindow;
@@ -66,6 +71,7 @@ protected:
         }
     }
 
+    bool animatePlane(string path);
 
 public slots:
     void showEditMenu();
@@ -76,14 +82,6 @@ public slots:
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
-
-
-
-
-
-
-    void on_SourceCombo_activated(int index);
-
     void on_pushButton_3_clicked();
 
 private:
@@ -92,9 +90,11 @@ private:
     Switch *mySwitch;
 
     std::vector<DraggableLabel*> LabelList;
-    int pos=0;
+    int posX=0;
+    int posY=0;
 
     Graph *Map;
+
 };
 
 #endif // MAINWINDOW_H
