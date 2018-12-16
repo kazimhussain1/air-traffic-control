@@ -36,6 +36,9 @@ public:
 protected:
     void paintEvent(QPaintEvent *event)
     {
+        event->type();//JUST TO STOP NOT USED WARNING
+
+
         QPainter painter(this);
         painter.setPen(QPen(Qt::green, 2, Qt::SolidLine, Qt::RoundCap));
 

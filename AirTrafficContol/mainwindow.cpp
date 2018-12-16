@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     item2->setGeometry(1100,40,200,30);
 
     item1->toggleSwitch(Qt::Unchecked);
+    
 
     connect(item1, SIGNAL(clicked(bool)), this, SLOT(showEditMenu()));
     connect(item2, SIGNAL(clicked(bool)), this, SLOT(showDepartMenu()));
@@ -42,7 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-
+    connect(ui->VertexNameBox, SIGNAL(returnPressed()), ui->pushButton, SIGNAL(clicked()));
+    connect(ui->DestinationNameBox, SIGNAL(returnPressed()), ui->pushButton_2, SIGNAL(clicked()));
 
     setAcceptDrops(true);
 }
@@ -155,6 +157,9 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_SourceCombo_activated(int index)
 {
+    index++;//JUST TO STOP NOT USED WARNING
+
+
     ui->DestinationCombo->clear();
     VertexNODE* currentVertex = Map->getRoot();
     while(currentVertex)

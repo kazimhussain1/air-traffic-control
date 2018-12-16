@@ -1,6 +1,8 @@
 #include "splashscreen.h"
 #include "ui_splashscreen.h"
 
+
+
 SplashScreen::SplashScreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SplashScreen)
@@ -16,6 +18,7 @@ SplashScreen::SplashScreen(QWidget *parent) :
                 Qt::AlignCenter,
                 newSize,
                 qApp->desktop()->availableGeometry()
+
             )
         );
 
