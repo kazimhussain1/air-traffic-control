@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[23];
-    char stringdata0[273];
+    QByteArrayData data[24];
+    char stringdata0[284];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,10 +50,11 @@ QT_MOC_LITERAL(15, 138, 7), // "QLabel*"
 QT_MOC_LITERAL(16, 146, 3), // "dot"
 QT_MOC_LITERAL(17, 150, 19), // "QPropertyAnimation*"
 QT_MOC_LITERAL(18, 170, 8), // "Animator"
-QT_MOC_LITERAL(19, 179, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(20, 201, 23), // "on_pushButton_2_clicked"
-QT_MOC_LITERAL(21, 225, 23), // "on_pushButton_3_clicked"
-QT_MOC_LITERAL(22, 249, 23) // "on_pushButton_4_clicked"
+QT_MOC_LITERAL(19, 179, 10), // "autoDepart"
+QT_MOC_LITERAL(20, 190, 21), // "on_pushButton_clicked"
+QT_MOC_LITERAL(21, 212, 23), // "on_pushButton_2_clicked"
+QT_MOC_LITERAL(22, 236, 23), // "on_pushButton_3_clicked"
+QT_MOC_LITERAL(23, 260, 23) // "on_pushButton_4_clicked"
 
     },
     "MainWindow\0stopTimer\0\0deleteDot\0"
@@ -61,7 +62,7 @@ QT_MOC_LITERAL(22, 249, 23) // "on_pushButton_4_clicked"
     "updateGraphWeights\0animatePlane\0int&\0"
     "i\0count\0std::string&\0path\0bool&\0"
     "finished\0QLabel*\0dot\0QPropertyAnimation*\0"
-    "Animator\0on_pushButton_clicked\0"
+    "Animator\0autoDepart\0on_pushButton_clicked\0"
     "on_pushButton_2_clicked\0on_pushButton_3_clicked\0"
     "on_pushButton_4_clicked"
 };
@@ -73,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,18 +82,19 @@ static const uint qt_meta_data_MainWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x06 /* Public */,
-       3,    0,   65,    2, 0x06 /* Public */,
+       1,    0,   69,    2, 0x06 /* Public */,
+       3,    0,   70,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   66,    2, 0x0a /* Public */,
-       5,    0,   67,    2, 0x0a /* Public */,
-       6,    0,   68,    2, 0x0a /* Public */,
-       7,    6,   69,    2, 0x0a /* Public */,
-      19,    0,   82,    2, 0x08 /* Private */,
-      20,    0,   83,    2, 0x08 /* Private */,
-      21,    0,   84,    2, 0x08 /* Private */,
-      22,    0,   85,    2, 0x08 /* Private */,
+       4,    0,   71,    2, 0x0a /* Public */,
+       5,    0,   72,    2, 0x0a /* Public */,
+       6,    0,   73,    2, 0x0a /* Public */,
+       7,    6,   74,    2, 0x0a /* Public */,
+      19,    0,   87,    2, 0x0a /* Public */,
+      20,    0,   88,    2, 0x08 /* Private */,
+      21,    0,   89,    2, 0x08 /* Private */,
+      22,    0,   90,    2, 0x08 /* Private */,
+      23,    0,   91,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -103,6 +105,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8, 0x80000000 | 11, 0x80000000 | 13, 0x80000000 | 15, 0x80000000 | 17,    9,   10,   12,   14,   16,   18,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -123,10 +126,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->showDepartMenu(); break;
         case 4: _t->updateGraphWeights(); break;
         case 5: _t->animatePlane((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< std::string(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< QLabel*(*)>(_a[5])),(*reinterpret_cast< QPropertyAnimation*(*)>(_a[6]))); break;
-        case 6: _t->on_pushButton_clicked(); break;
-        case 7: _t->on_pushButton_2_clicked(); break;
-        case 8: _t->on_pushButton_3_clicked(); break;
-        case 9: _t->on_pushButton_4_clicked(); break;
+        case 6: _t->autoDepart(); break;
+        case 7: _t->on_pushButton_clicked(); break;
+        case 8: _t->on_pushButton_2_clicked(); break;
+        case 9: _t->on_pushButton_3_clicked(); break;
+        case 10: _t->on_pushButton_4_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -186,13 +190,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

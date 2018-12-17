@@ -29,7 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //    mySwitch->setGeometry(1150,20,50,30);
 //    mySwitch->show();
 
+    departTimer = new QTimer();
+    departTimer->start(1000);
 
+    connect(departTimer, SIGNAL(timeout()), this, SLOT(autoDepart()));
 
     QSize newSize( 1280, 720 );
         setGeometry(
@@ -93,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     }
 
-    currentTime = new QDateTime(QDate(2018,1,10), QTime(2,5,0));
+    currentTime = new QDateTime(QDate(2018,10,1), QTime(2,5,0));
 
     ui->label_7->setText(currentTime->toString("hh:mm:ss"));
 
@@ -200,6 +203,24 @@ void MainWindow::animatePlane(int& i,int& count,std::string& path, bool& finishe
     {
         emit stopTimer();
     }
+}
+
+void MainWindow::autoDepart()
+{
+    if(*currentTime > table->begin()->value)
+    {
+        std::string path = Map->DjikstraShortestPath(table->begin()->Source,table->begin()->Destination);
+
+        int i = path.length();
+        LimitedTimer *AnimationTimer = new LimitedTimer(path,i);
+        AnimationTimer->setInterval(500);
+        connect(AnimationTimer, SIGNAL(tick(int&,int&,std::string&,bool&,QLabel*,QPropertyAnimation*)),this,SLOT(animatePlane(int&,int&,std::string&,bool&,QLabel*,QPropertyAnimation*)));
+        connect(this, SIGNAL(stopTimer()), AnimationTimer, SLOT(stop()));
+
+        AnimationTimer->start();
+        table->erase(table->begin());
+    }
+
 }
 
 

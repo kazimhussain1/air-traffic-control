@@ -8,6 +8,7 @@
 #include <QTableWidget>
 #include <QVariant>
 #include <QDateTime>
+#include <QTimer>
 
 
 #include <vector>
@@ -124,7 +125,7 @@ public slots:
     void showDepartMenu();
     void updateGraphWeights();
     void animatePlane(int& i,int& count,std::string& path, bool& finished, QLabel* dot, QPropertyAnimation* Animator);
-
+    void autoDepart();
 
 
 
@@ -146,6 +147,7 @@ private:
     QPainter *myPainter;
     Switch *mySwitch;
     QDateTime *currentTime;
+    QTimer *departTimer;
 
     std::vector<DraggableLabel*> LabelList;
     int posX=0;
