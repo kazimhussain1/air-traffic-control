@@ -47,8 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setAcceptDrops(true);
 
 
-    Schedule = new LinkedList;
-
+    //Schedule = new LinkedList;
+    table = new vector<NODE>;
 
     QXlsx::Document myDocument("Test.xlsx");
 
@@ -82,14 +82,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
             QDateTime temp(date,time);
 
-            Schedule->insert(Source.toStdString()[0], Destination.toStdString()[0], temp);
+            NODE tempNODE(Source.toStdString()[0], Destination.toStdString()[0], temp);
+            table->push_back(tempNODE);
 
             i++;
         }
 
+        std::sort(table->begin(),table->end());
 
-        Schedule->BubbleSort();
+
     }
+
+    currentTime = new QDateTime(QDate(2018,1,10), QTime(2,5,0));
+
+    ui->label_7->setText(currentTime->toString("hh:mm:ss"));
 
 }
 
@@ -293,4 +299,10 @@ void MainWindow::on_pushButton_3_clicked()
     //connect(animation,SIGNAL(finished()), this, SLOT());
 
 
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    *currentTime = currentTime->addSecs(60);
+    ui->label_7->setText(currentTime->toString("hh:mm:ss"));
 }

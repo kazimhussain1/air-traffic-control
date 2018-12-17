@@ -43,6 +43,8 @@ public:
     QLabel *label_5;
     QLabel *label_6;
     QComboBox *DestinationCombo;
+    QLabel *label_7;
+    QPushButton *pushButton_4;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -108,9 +110,18 @@ public:
         DestinationCombo = new QComboBox(groupBox_2);
         DestinationCombo->setObjectName(QStringLiteral("DestinationCombo"));
         DestinationCombo->setGeometry(QRect(50, 200, 72, 22));
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(560, 0, 81, 21));
+        label_7->setStyleSheet(QStringLiteral("font: 75 15pt \"MS Sans Serif\";"));
+        pushButton_4 = new QPushButton(centralwidget);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setGeometry(QRect(680, 0, 80, 21));
         MainWindow->setCentralWidget(centralwidget);
         groupBox_2->raise();
         groupBox->raise();
+        label_7->raise();
+        pushButton_4->raise();
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 1280, 20));
@@ -144,6 +155,8 @@ public:
         pushButton_3->setText(QApplication::translate("MainWindow", "Depart", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Source</span></p></body></html>", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Destination</span></p></body></html>", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">YOLO</span></p></body></html>", nullptr));
+        pushButton_4->setText(QApplication::translate("MainWindow", "Increase Time", nullptr));
     } // retranslateUi
 
 };

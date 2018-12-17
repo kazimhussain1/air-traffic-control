@@ -7,10 +7,35 @@ class NODE
 {
 public:
 
+    NODE()
+    {
+
+    }
+
+    bool operator <(NODE& B)
+    {
+        return this->value < B.value? true : false;
+    }
+
+    bool operator >(NODE& B)
+    {
+        return this->value > B.value? true : false;
+    }
+
+    bool operator <=(NODE& B)
+    {
+        return this->value <= B.value? true : false;
+    }
+
+    bool operator >=(NODE& B)
+    {
+        return this->value >= B.value? true : false;
+    }
+
     char Source;
     char Destination;
     QDateTime value;
-	NODE *next;
+    NODE *next;
 
 };
 

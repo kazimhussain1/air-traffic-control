@@ -21,7 +21,7 @@
 #include <CustomWidgets/draggablelabel.h>
 #include <CustomWidgets/togglebutton.h>
 #include <CustomWidgets/limitedtimer.h>
-#include <LinkedList/LinkedList.h>
+//#include <LinkedList/LinkedList.h>
 
 #include "xlsxdocument.h"
 #include "xlsxchartsheet.h"
@@ -29,6 +29,46 @@
 #include "xlsxchart.h"
 #include "xlsxrichstring.h"
 #include "xlsxworkbook.h"
+
+class NODE
+{
+public:
+
+    NODE(char Source, char Destination, QDateTime value)
+    {
+        this->Source = Source;
+        this->value = value;
+        this->Destination = Destination;
+    }
+
+    bool operator <(NODE& B)
+    {
+        return this->value < B.value? true : false;
+    }
+
+    bool operator >(NODE& B)
+    {
+        return this->value > B.value? true : false;
+    }
+
+    bool operator <=(NODE& B)
+    {
+        return this->value <= B.value? true : false;
+    }
+
+    bool operator >=(NODE& B)
+    {
+        return this->value >= B.value? true : false;
+    }
+
+    char Source;
+    char Destination;
+    QDateTime value;
+
+
+};
+
+
 
 namespace Ui {
 class MainWindow;
@@ -95,6 +135,8 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
 
+    void on_pushButton_4_clicked();
+
 signals:
     void stopTimer();
     void deleteDot();
@@ -109,7 +151,8 @@ private:
     int posX=0;
     int posY=0;
 
-    LinkedList *Schedule;
+    //LinkedList *Schedule;
+    std::vector<NODE> *table;
 
     Graph *Map;
 
