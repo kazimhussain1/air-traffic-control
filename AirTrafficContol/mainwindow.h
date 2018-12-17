@@ -6,7 +6,9 @@
 #include <QLabel>
 #include <QStyle>
 #include <QTableWidget>
-#include <QTimer>
+#include <QVariant>
+#include <QDateTime>
+
 
 #include <vector>
 #include <math.h>
@@ -18,6 +20,8 @@
 #include <Graph/Graph.h>
 #include <CustomWidgets/draggablelabel.h>
 #include <CustomWidgets/togglebutton.h>
+#include <CustomWidgets/limitedtimer.h>
+#include <LinkedList/LinkedList.h>
 
 #include "xlsxdocument.h"
 #include "xlsxchartsheet.h"
@@ -46,6 +50,7 @@ protected:
 
         QPainter painter(this);
         painter.setPen(QPen(Qt::green, 2, Qt::SolidLine, Qt::RoundCap));
+        painter.setFont(QFont("Sans Serif", 10));
 
         VertexNODE* currentVertex = Map->getRoot();
         while(currentVertex)
@@ -62,7 +67,8 @@ protected:
                 myPos2.setY(myPos2.y() + 15);
 
                 painter.drawLine(myPos1, myPos2);
-
+                painter.setBackground(QBrush(QColor("black")));
+                painter.setBackgroundMode(Qt::OpaqueMode);
                 painter.drawText(QPoint((myPos1 + myPos2)/2), QString::number(currentEdge->weight));
 
                 currentEdge = currentEdge->nextEdge;
@@ -71,12 +77,17 @@ protected:
         }
     }
 
-    bool animatePlane(string path);
+
 
 public slots:
     void showEditMenu();
     void showDepartMenu();
     void updateGraphWeights();
+    void animatePlane(int& i,int& count,std::string& path, bool& finished, QLabel* dot, QPropertyAnimation* Animator);
+
+
+
+
 
 
 private slots:
@@ -84,16 +95,24 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
 
+signals:
+    void stopTimer();
+    void deleteDot();
+
 private:
     Ui::MainWindow *ui;
     QPainter *myPainter;
     Switch *mySwitch;
+    QDateTime *currentTime;
 
     std::vector<DraggableLabel*> LabelList;
     int posX=0;
     int posY=0;
 
+    LinkedList *Schedule;
+
     Graph *Map;
+
 
 };
 

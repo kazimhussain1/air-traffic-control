@@ -41,12 +41,56 @@ MainWindow::MainWindow(QWidget *parent) :
             )
         );
 
-
-
     connect(ui->VertexNameBox, SIGNAL(returnPressed()), ui->pushButton, SIGNAL(clicked()));
     connect(ui->DestinationNameBox, SIGNAL(returnPressed()), ui->pushButton_2, SIGNAL(clicked()));
 
     setAcceptDrops(true);
+
+
+    Schedule = new LinkedList;
+
+
+    QXlsx::Document myDocument("Test.xlsx");
+
+    if (myDocument.isLoadPackage())
+    {
+        int i =1;
+        while(true)
+        {
+            QXlsx::Cell* Cell1 = myDocument.cellAt(i,1);
+            QXlsx::Cell* Cell2 = myDocument.cellAt(i,2);
+            QXlsx::Cell* Cell3 = myDocument.cellAt(i,3);
+            QXlsx::Cell* Cell4 = myDocument.cellAt(i,4);
+
+
+            if(Cell1 == NULL || Cell2 == NULL || Cell3 == NULL || Cell4 == NULL)
+                break;
+            QVariant VariantS = Cell1->value();
+            QVariant VariantD = Cell2->value();
+            QVariant Variant1 = Cell3->value();
+            QVariant Variant2 = Cell4->value();
+
+
+            QString Source = VariantS.toString();
+            QString Destination = VariantD.toString();
+
+            QString myTime = Variant1.toString();
+            QString myDate = Variant2.toString();
+
+            QDate date = QDate::fromString(myDate,"dd.MM.yyyy");
+            QTime time = QTime::fromString(myTime,"hh:mm:ss");
+
+            QDateTime temp(date,time);
+
+            Schedule->insert(Source.toStdString()[0], Destination.toStdString()[0], temp);
+
+            i++;
+        }
+
+
+        Schedule->BubbleSort();
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -87,11 +131,73 @@ void MainWindow::updateGraphWeights()
     //this->update();
 }
 
-bool MainWindow::animatePlane(string path)
+
+void MainWindow::animatePlane(int& i,int& count,std::string& path, bool& finished, QLabel* dot, QPropertyAnimation* Animator)
 {
-    int i = path.length();
-    QTimer *AnimationTimer = new QTimer;
+
+    if((i < count-1 &&  finished) || i == 0)
+    {
+
+        dot->hide();
+
+
+        finished = false;
+        dot->close();
+        dot->clear();
+
+        emit deleteDot();
+        dot->setWindowOpacity(0);
+        dot->setStyleSheet("background-color: rgba(255,255,255,1);"
+                           "color: rgba(0,0,0,0)");
+        char SourceName = path[i];
+        char DestinationName = path[i+1];
+
+        VertexNODE* SourceVertex =  Map->searchVertex(SourceName);
+        VertexNODE* DestinationVertex =  Map->searchVertex(DestinationName);
+
+        QRect SourceGeometry = SourceVertex->visualNode->geometry();
+        SourceGeometry.adjust(10,10,-10,-10);
+
+        QRect DetinationGeometry = DestinationVertex->visualNode->geometry();
+        DetinationGeometry.adjust(10,10,-10,-10);
+
+        dot = new QLabel(this);
+        connect(this, SIGNAL(deleteDot()), dot, SLOT(close()));
+
+        dot->show();
+
+        dot->setStyleSheet(
+                    "color:green;"
+                    "background-color:black;"
+                    "font: bold 10px arial;"
+                    "border: solid 1px black;"
+                    "border-radius: 5px;"
+                    "qproperty-alignment: 'AlignHCenter | AlignVCenter';"
+                    "qproperty-wordWrap: true;"
+                    );
+
+
+        Animator->setTargetObject(dot);
+        Animator->setPropertyName("geometry");
+        Animator->setDuration(2000);
+        Animator->setStartValue(SourceGeometry);
+        Animator->setEndValue(DetinationGeometry);
+
+
+
+
+        Animator->start();
+
+        i++;
+    }
+    else if(i == count -1)
+    {
+        emit stopTimer();
+    }
 }
+
+
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -172,43 +278,19 @@ void MainWindow::on_pushButton_3_clicked()
     char SourceName = ui->SourceCombo->currentText().toStdString()[0];
     char DestinationName = ui->DestinationCombo->currentText().toStdString()[0];
 
-    VertexNODE* SourceVertex =  Map->searchVertex(SourceName);
-    VertexNODE* DestinationVertex =  Map->searchVertex(DestinationName);
-
-    QRect SourceGeometry = SourceVertex->visualNode->geometry();
-    SourceGeometry.adjust(10,10,-10,-10);
-
-    QRect DetinationGeometry = DestinationVertex->visualNode->geometry();
-    DetinationGeometry.adjust(10,10,-10,-10);
-
-    QLabel *temp = new QLabel(this);
-
-    temp->show();
-
-    temp->setStyleSheet(
-                "color:green;"
-                "background-color:light-green;"
-                "font: bold 10px arial;"
-                "border: solid 1px green;"
-                "border-radius: 5px;"
-                "qproperty-alignment: 'AlignHCenter | AlignVCenter';"
-                "qproperty-wordWrap: true;"
-                );
-
     std::string path = Map->DjikstraShortestPath(SourceName,DestinationName);
 
-    animatePlane(path);
+    int i = path.length();
+    LimitedTimer *AnimationTimer = new LimitedTimer(path,i);
+    AnimationTimer->setInterval(500);
+    connect(AnimationTimer, SIGNAL(tick(int&,int&,std::string&,bool&,QLabel*,QPropertyAnimation*)),this,SLOT(animatePlane(int&,int&,std::string&,bool&,QLabel*,QPropertyAnimation*)));
+    connect(this, SIGNAL(stopTimer()), AnimationTimer, SLOT(stop()));
 
-    QPropertyAnimation *animation = new QPropertyAnimation(temp, "geometry");
-    animation->setDuration(20000);
-    animation->setStartValue(SourceGeometry);
-    animation->setEndValue(DetinationGeometry);
+    AnimationTimer->start();
 
 
 
-    animation->start();
-
-    connect(animation,SIGNAL(finished()), this, SLOT());
+    //connect(animation,SIGNAL(finished()), this, SLOT());
 
 
 }

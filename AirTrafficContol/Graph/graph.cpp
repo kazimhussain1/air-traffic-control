@@ -533,6 +533,7 @@ string Graph::DjikstraShortestPath(char Source, char Destination)
         myVertex = searchVertex(myVertex->previous);
     }
     path = myVertex->name + path;
+    ResetDistances();
     return path;
 }
 
@@ -683,6 +684,19 @@ void Graph::ResetPickedEdge()
             currentEdge = currentEdge->nextEdge;
         }
         currentVertex = currentVertex->nextVertex;
+    }
+}
+
+void Graph::ResetDistances()
+{
+    VertexNODE* currentVertex = this->root;
+    while (currentVertex)
+    {
+        currentVertex->distance = WINT_MAX;
+        currentVertex->previous = 0;
+
+        currentVertex = currentVertex->nextVertex;
+
     }
 }
 

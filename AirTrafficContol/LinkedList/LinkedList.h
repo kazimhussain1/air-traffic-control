@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QDateTime>
 
 using namespace std;
 
@@ -6,7 +7,9 @@ class NODE
 {
 public:
 
-	int value;
+    char Source;
+    char Destination;
+    QDateTime value;
 	NODE *next;
 
 };
@@ -14,13 +17,15 @@ public:
 class LinkedList
 {
 public:
-	void insert(int value, int mode = 1)
+    void insert(char Source, char Destination, QDateTime value, int mode = 1)
 	{
-		if (mode = 1)
+        if (mode == 1)
 		{
 			if (start == NULL)
 			{
 				ptr = (NODE*)malloc(sizeof(NODE));
+                ptr->Source = Source;
+                ptr->Destination = Destination;
 				ptr->value = value;
 				ptr->next = NULL;
 				start = ptr;
@@ -30,6 +35,8 @@ public:
 			{
 				ptr->next = (NODE*)malloc(sizeof(NODE));
 				ptr = ptr->next;
+                ptr->Source = Source;
+                ptr->Destination = Destination;
 				ptr->value = value;
 				ptr->next = NULL;
 			}
@@ -37,6 +44,8 @@ public:
 		else if (mode == 2)
 		{
 			NODE *ptr = (NODE*)malloc(sizeof(NODE));
+            ptr->Source = Source;
+            ptr->Destination = Destination;
 			ptr->value = value;
 			ptr->next = NULL;
 
@@ -57,7 +66,7 @@ public:
 
 		}
 	}
-	void PrintList()
+    /*void PrintList()
 	{
 		NODE *current = start;
 		if (start)
@@ -73,8 +82,8 @@ public:
 		{
 			cout << "No elements to print" << endl;
 		}
-	}
-	bool search(int value)
+    }*/
+    bool search(QDateTime value)
 	{
 		if (start)
 		{
@@ -102,10 +111,10 @@ public:
 		}
 	}
 
-	void Delete(int value)
+    void Delete(QDateTime value)
 	{
 		NODE *previous, *current = start;
-		int flag = 0;
+        //int flag = 0;
 		if (current->value == value)
 		{
 			NODE *temp = start;

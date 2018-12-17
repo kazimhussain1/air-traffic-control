@@ -59,7 +59,7 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(860, 90, 171, 521));
+        groupBox->setGeometry(QRect(1090, 90, 171, 521));
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(50, 110, 80, 21));

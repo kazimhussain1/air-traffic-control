@@ -85,10 +85,13 @@ public:
     bool AllVisited();
 
 
+
     void ResetVisited();
 
 
     void ResetPickedEdge();
+
+    void ResetDistances();
 
 
 
